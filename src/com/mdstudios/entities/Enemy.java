@@ -28,6 +28,7 @@ public class Enemy extends Entity {
 	
 	public void tick() {
 		//if(Game.rand.nextInt(100) < 30) {
+		if(this.isColiddingWithPlayer() == false) {
 			if((int)x < Game.player.getX() && World.isFree((int)(x+speed),  this.getY())
 					&& !isColidding((int)(x+speed), this.getY())) {
 				x += speed;
@@ -43,15 +44,31 @@ public class Enemy extends Entity {
 					&& !isColidding(this.getX(), (int)(y-speed))) {
 				y -= speed;
 			}
-			
-			frames++;
-			if(frames == maxFrames) {
-				frames = 0;
-				index++;
-				if(index > maxIndex)
-					index = 0;
+		} else {
+			//Estamos colidindo
+			if(Game.rand.nextInt(100) < 10) {
+				Game.player.life-= Game.rand.nextInt(3);
+				if(Game.player.life <= 0) {
+					//Game over!
+				}
+				System.out.println("Vida: " + Game.player.life);
 			}
+		}
+			
+		frames++;
+		if(frames == maxFrames) {
+			frames = 0;
+			index++;
+			if(index > maxIndex)
+				index = 0;
+		}
 		//}
+	}
+	
+	public boolean isColiddingWithPlayer() {
+		Rectangle enemyCurrent = new Rectangle(this.getX() + maskx, this.getY() + masky, maskw, maskh);
+		Rectangle player = new Rectangle(Game.player.getX(), Game.player.getY(), 16, 16);
+		return enemyCurrent.intersects(player);
 	}
 	
 	public boolean isColidding(int xnext, int ynext) {

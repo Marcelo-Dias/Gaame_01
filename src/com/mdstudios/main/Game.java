@@ -18,6 +18,7 @@ import com.mdstudios.entities.Enemy;
 import com.mdstudios.entities.Entity;
 import com.mdstudios.entities.Player;
 import com.mdstudios.graficos.Spritesheet;
+import com.mdstudios.graficos.UI;
 import com.mdstudios.world.World;
 
 public class Game extends Canvas implements Runnable, KeyListener {
@@ -42,12 +43,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	
 	public static Random rand;
 	
+	public UI ui;
+	
 	public Game() {
 		rand = new Random();
 		this.addKeyListener(this);
 		this.setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
 		//Inicializando objetos.
+		ui = new UI();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		entities = new ArrayList<Entity>();
 		enemies = new ArrayList<Enemy>();
@@ -104,13 +108,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		/*Renderização do jogo*/
+		/*RenderizaÃ§Ã£o do jogo*/
 		//Graphics2D g2 = (Graphics2D) g;
 		world.render(g);
 		for(int i = 0; i < entities.size(); i++) {
 			Entity e = entities.get(i);
 			e.render(g);
 		}
+		ui.render(g);
 		
 		/***/
 		g.dispose();
