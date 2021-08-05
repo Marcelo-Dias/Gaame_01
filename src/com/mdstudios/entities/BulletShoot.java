@@ -9,11 +9,11 @@ import com.mdstudios.world.Camera;
 
 public class BulletShoot extends Entity {
 	
-	private int dx, dy;
+	private double dx, dy;
 	private double spd = 4;
 	private int life = 20, curLife = 0;
 	
-	public BulletShoot(int x, int y, int width, int height, BufferedImage sprite, int dx, int dy) {
+	public BulletShoot(int x, int y, int width, int height, BufferedImage sprite, double dx, double dy) {
 		super(x, y, width, height, sprite);
 		this.dx = dx;
 		this.dy = dy;

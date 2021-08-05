@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,9 +23,10 @@ import com.mdstudios.entities.Entity;
 import com.mdstudios.entities.Player;
 import com.mdstudios.graficos.Spritesheet;
 import com.mdstudios.graficos.UI;
+import com.mdstudios.world.Camera;
 import com.mdstudios.world.World;
 
-public class Game extends Canvas implements Runnable, KeyListener {
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
 	
 	private static final long serialVersionUID = 1L;
 	public static JFrame frame;
@@ -51,6 +54,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public Game() {
 		rand = new Random();
 		this.addKeyListener(this);
+		this.addMouseListener(this);
 		this.setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
 		//Inicializando objetos.
@@ -134,7 +138,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
 		g.setFont(new Font("arial", Font.BOLD, 20));
 		g.setColor(Color.white);
-		g.drawString("Munição: " + player.ammo, 600, 20);
+		g.drawString("Munição: " + player.ammo, 580, 20);
 		bs.show();
 	}
 	
@@ -213,6 +217,38 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				e.getKeyCode() == KeyEvent.VK_S) {
 			player.down = false;
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		player.mouseShoot = true;
+		player.mx = e.getX() / SCALE;
+		player.my = e.getY() / SCALE;
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
