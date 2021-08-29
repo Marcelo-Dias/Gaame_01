@@ -20,6 +20,9 @@ public class Enemy extends Entity {
 	private BufferedImage[] sprites;
 	
 	private int life = 10;
+	
+	private boolean isDamaged = false;
+	private int damageFrames = 10, damageCurrent = 0;
 
 	public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, null);
@@ -49,7 +52,7 @@ public class Enemy extends Entity {
 		} else {
 			//Estamos colidindo
 			if(Game.rand.nextInt(100) < 10) {
-				Game.player.life-= Game.rand.nextInt(3);
+				Game.player.life -= Game.rand.nextInt(3);
 				Game.player.isDamaged = true;
 				//System.out.println("Vida: " + Game.player.life);
 			}
@@ -70,9 +73,18 @@ public class Enemy extends Entity {
 			destroySelf();
 			return;
 		}
+		
+		if(isDamaged) {
+			this.damageCurrent++;
+			if(this.damageCurrent == this.damageFrames) {
+				this.damageCurrent = 0;
+				this.isDamaged = false;
+			}
+		}
 	}
 	
 	public void destroySelf() {
+		Game.enemies.remove(this);
 		Game.entities.remove(this);
 	}
 	
@@ -81,6 +93,7 @@ public class Enemy extends Entity {
 			Entity e = Game.bullets.get(i);
 			if(e instanceof BulletShoot) {
 				if(Entity.isColidding(this, e)) {
+					isDamaged = true;
 					life--;
 					Game.bullets.remove(i);
 					return;
@@ -110,7 +123,10 @@ public class Enemy extends Entity {
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		if(!isDamaged)
+			g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		else
+			g.drawImage(Entity.ENEMY_FEEDBACK, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		
 		//super.render(g);
 		//g.setColor(Color.blue);

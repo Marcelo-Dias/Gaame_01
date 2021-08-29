@@ -134,6 +134,7 @@ public class Player extends Entity{
 		}
 		
 		if(life <= 0) {
+			/*
 			Game.entities.clear();
 			Game.enemies.clear();
 			Game.entities = new ArrayList<Entity>();
@@ -143,6 +144,7 @@ public class Player extends Entity{
 			Game.entities.add(Game.player);
 			Game.world = new World("/map.png");
 			return;
+			*/
 		}
 		
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH / 2), 0, World.WIDTH * 16 - Game.WIDTH);
