@@ -134,6 +134,7 @@ public class Player extends Entity{
 		}
 		
 		if(life <= 0) {
+			//Game over!
 			/*
 			Game.entities.clear();
 			Game.enemies.clear();
@@ -145,6 +146,8 @@ public class Player extends Entity{
 			Game.world = new World("/map.png");
 			return;
 			*/
+			life = 0;
+			Game.gameState = "GAME_OVER";
 		}
 		
 		Camera.x = Camera.clamp(this.getX() - (Game.WIDTH / 2), 0, World.WIDTH * 16 - Game.WIDTH);
